@@ -1,0 +1,17 @@
+.titulo-responsive {
+  /*
+   *Tamaño min: 1.5rem
+   *Escalado: 5vw + 1rem, 
+   *Tamaño max: 6rem 
+  */
+  font-size: clamp(1.5rem, 5vw + 1rem, 6rem);
+}
+
+.content-responsive {
+  /*
+   *Tamaño min: 1.5rem
+   *Escalado: 5vw + 1rem, 
+   *Tamaño max: 6rem 
+  */
+  font-size: clamp(1.5rem, 3vw + 1rem, 6rem);
+}
