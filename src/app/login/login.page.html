@@ -1,43 +1,52 @@
-<ion-header [translucent]="true">
-</ion-header>
-
 <ion-content [fullscreen]="true">
-  <h1 class="titulo-responsive">SkeletonAPP</h1>
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Login</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <ion-card>
-    <ion-card-header> Iniciar sesion</ion-card-header>
-    <ion-card-content>
-      <ion-item lines="full">
-        <!-- Usamos [(ngModel)] para indicarle al input el objeto al que darle la info-->
-        <ion-input 
-          label="Usuario" 
-          labelPlacement="fixed" 
-          type="text" 
-          placeholder="Ingrese su usuario" 
-          [(ngModel)]="user.usuario">
-        </ion-input>
-      </ion-item>
-      <ion-item lines="full">
-        <!-- Usamos [(ngModel)] para indicarle al input el objeto al que darle la info-->
-        <ion-input 
-          label="Contraseña" 
-          labelPlacement="fixed" 
-          type="password" 
-          placeholder="Ingrese su contraseña" 
-          [(ngModel)]="user.contra">
-        </ion-input>
-      </ion-item>
-      <ion-row>
-        <ion-col>
-          <!-- Indicamos con (click) la funcion que llamara al presionar el boton-->
-          <ion-button expand="full" (click)="ingresar()">Ingresar</ion-button>
-        </ion-col>
-      </ion-row>
-      <p>{{ fechaHoy | date:'fullDate' }}</p>
-    </ion-card-content>
-  </ion-card>
+  <hgroup class="hgroup-login">
+    <h1 
+      #tituloHome 
+      class="titulo-responsive ion-text-center">
+      SkeletonAPP
+    </h1>
+    <p 
+      class="content-responsive ion-text-center">
+      Aquí comienza todo
+    </p>
+  </hgroup>
+
+
+  <h1 
+    style="padding-top: 6vh;" 
+    class="bienvenido ion-text-center">
+    ¡Bienvenido!
+  </h1>
+  
+  <ion-item lines="full">
+    <!-- Usamos [(ngModel)] para indicarle al input el objeto al que darle la info-->
+    <ion-input  
+      class="input-texto"
+      label="Usuario" 
+      labelPlacement="stacked" 
+      type="text" 
+      [(ngModel)]="user.usuario"
+      clearInput="true">
+    </ion-input>
+  </ion-item>
+
+  <ion-item lines="full">
+    <!-- Usamos [(ngModel)] para indicarle al input el objeto al que darle la info-->
+    <ion-input 
+      class="input-texto" 
+      label="Contraseña" 
+      labelPlacement="stacked" 
+      type="password" 
+      [(ngModel)]="user.contra"
+      clearInput="true">
+    </ion-input>
+  </ion-item>
+
+  <div class="button-row">
+    <!-- Indicamos con (click) la funcion que llamara al presionar el boton-->
+    <ion-button fill="outline" (click)="ingresar()">
+      Ingresar
+    </ion-button>
+    <a class="ion-text-center">Crea tu cuenta gratis</a>
+  </div>
 </ion-content>

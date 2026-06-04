@@ -1,7 +1,11 @@
-// Importaciones de librerias
-import { Component } from '@angular/core';
+import { Component,ViewChild, ElementRef  } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-
+import { AlertController } from '@ionic/angular';
+// Import de Pipes
+import { CapitalizarPipe } from '../components/pipes/capitalizar-pipe';
+import { DatePipe } from '@angular/common';
+// Import para animaciones
+import { AnimationController, Animation } from '@ionic/angular';
 
 @Component({
   selector: 'app-home', // Nombre del selector
@@ -9,14 +13,15 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['home.page.scss'], // Donde esta(n) el/los archivo(s) CSS (los estilos)
   standalone: false,
 })
+
 export class HomePage {
 
   // Informacion adicional del usuario
   userInfo = {
-    nombre:"",
-    apellido:"",
-    nivelEd:"",
-    fechaNac:""
+    nombre:'',
+    apellido:'',
+    nivelEd:'',
+    fechaNac: null as Date | null
   }
 
   dataLogin: any; // Crea una variable de tipo any (admite cualquier valor)
@@ -32,7 +37,16 @@ export class HomePage {
   */ 
 
   // Para establecer el valor inicial de data 
-  constructor(private activeRoute: ActivatedRoute, private router: Router) {
+  @ViewChild('inputNombre', { read: ElementRef }) inputNombre!: ElementRef;
+  @ViewChild('inputApellido', { read: ElementRef }) inputApellido!: ElementRef;
+  @ViewChild('tituloHome', { read: ElementRef }) tituloHome!: ElementRef;
+  constructor(
+    private activeRoute: ActivatedRoute, 
+    private router: Router, 
+    private alert: AlertController,
+    private pipe: CapitalizarPipe,
+    private datePipe: DatePipe,
+    private animCtrl: AnimationController) {
     /* Se llama a la ruta ⬆️ activa y se obtienen sus parametros mediante una suscripcion
 
       * subscribe permite escuchar de forma reactiva los cambios en la URL. Se utiliza cuando un usuario
@@ -52,7 +66,7 @@ export class HomePage {
       */
       if (this.router.currentNavigation()?.extras?.state) {// Validamos si la navegacion actual tiene extras
       
-        this.dataLogin = this.router.currentNavigation()?.extras?.state?.["user"]; // Si tiene extras, rescata lo enviado
+        this.dataLogin = this.router.currentNavigation()?.extras?.state?.['user']; // Si tiene extras, rescata lo enviado
         console.log(this.dataLogin); // Muestra lo rescatado en consola
         
       }else {
@@ -62,12 +76,86 @@ export class HomePage {
 
   }
 
+  async animarInput() {
+    // // Instrucciones para la animacion del input del nombre
+    const animNombre = this.animCtrl.create()
+    .addElement(this.inputNombre.nativeElement)
+    .duration(800)
+    .keyframes([
+      { offset: 0, transform: 'translateX(0)', opacity: '1' },
+      { offset: 0.5, transform: 'translateX(120%)', opacity: '1' },
+      { offset: 1, transform: 'translateX(0)', opacity: '1' }
+    ]);
+    // Instrucciones para la animacion del input del apellido
+    const animApellido = this.animCtrl.create()
+    .addElement(this.inputApellido.nativeElement)
+    .duration(800)
+    .keyframes([
+      { offset: 0, transform: 'translateX(0)', opacity: '1' },
+      { offset: 0.5, transform: 'translateX(120%)', opacity: '1' },
+      { offset: 1, transform: 'translateX(0)', opacity: '1' }
+    ]);
+
+    await Promise.all([animNombre.play(), animApellido.play()]);
+  }
+
+  // Instrucciones para la animacion del header
+  async animTitulo() {
+    const animSkeleton = this.animCtrl.create()
+    .addElement(this.tituloHome.nativeElement)
+    .duration(800)
+    .keyframes([
+      // Inicia fuera de pantalla
+      { offset: 0, transform: 'translateX(-50%)', opacity: '1' },
+      // Simula animacion de rebote
+      { offset: 0.4, transform: 'translateX(20%)', opacity: '1' },
+      { offset: 0.55, transform: 'translateX(0)', opacity: '1' },
+      { offset: 0.7, transform: 'translateX(20%)', opacity: '1' },
+      { offset: 1, transform: 'translateX(0)', opacity: '1' }
+    ]);
+    await Promise.all([animSkeleton.play()]);
+  }
+  // Ocultar skeletonAPP antes de la animacion
+  ionViewWillEnter() {
+    this.tituloHome.nativeElement.style.opacity = '0';
+  }
+  // Ejecutar animacion al entrar
+  ionViewDidEnter() {
+    this.animTitulo();
+  }
+  // keyof typeof para decirle al codigo que campo es valido
+  capitalizar(campo: keyof typeof this.userInfo, texto: string) {
+    //this.userInfo[campo] = this.pipe.transform(texto);
+    //console.log(`Nombre: ${this.userInfo.nombre} ${this.userInfo.apellido}`);
+  }
+
+  formatoFecha(texto: Date){
+    //this.userInfo.fechaNac = this.datePipe.transform(texto, 'dd/MM/yyyy')
+    console.log(`fecha: ${this.userInfo.fechaNac}`)
+  }
+
+  animarNombre: boolean = false;
+  animarApellido: boolean = false;
+
   limpiar() {
+    this.animarInput();
+    this.userInfo.nombre = '';
+    this.userInfo.apellido = '';
+    this.userInfo.nivelEd = '';
+    this.userInfo.fechaNac = null as Date | null;
 
   }
 
-  mostrar() {
-    
-  }
-  
+  async mostrar() {
+    const fecha = this.datePipe.transform(this.userInfo.fechaNac, 'dd/MM/yyyy', '', 'es-ES')
+    const alert = await this.alert.create({
+      header: 'Usuario', 
+      message: `
+      Su nombre es  ${this.userInfo.nombre} ${this.userInfo.apellido}, 
+      su nivel de educación es ${this.userInfo.nivelEd} 
+      y su fecha de nacimiento es ${fecha}`,
+      buttons: ['Ok']
+    });
+    await alert.present();
+  } 
 }

@@ -1,17 +1,70 @@
-.titulo-responsive {
-  /*
-   *Tamaño min: 1.5rem
-   *Escalado: 5vw + 1rem, 
-   *Tamaño max: 6rem 
-  */
+.hgroup-login {
+  h1 {
+    margin-bottom: 0; // o un valor pequeño como 4px
+    font-size: clamp(1.5rem, 9vw + 1rem, 6rem);
+    font-weight: bold;
+  }
+
+  p {
+    margin-top: 0;
+    font-size: clamp(1rem, 1vw + 1rem, 6rem);
+  }
+}
+
+.bienvenido {
   font-size: clamp(1.5rem, 5vw + 1rem, 6rem);
 }
 
-.content-responsive {
-  /*
-   *Tamaño min: 1.5rem
-   *Escalado: 5vw + 1rem, 
-   *Tamaño max: 6rem 
-  */
-  font-size: clamp(1.5rem, 3vw + 1rem, 6rem);
+ion-card {
+  --border-color: transparent;
+}
+
+ion-item {
+  --border-color: transparent;
+  --padding-start: 7vw;
+  --padding-end: 7vw;
+  --highlight-color-focused: transparent;
+  width: 100%;
+}
+
+// Input con borde inferior y texto responsive
+.input-texto {
+  background: transparent;
+  border-bottom: 0.7vw solid #000000;
+  width: 100%;
+  font-size: clamp(1rem, 2.7vw + 0.2rem, 6rem);
+  color: black;
+  --placeholder-opacity: 1;
+  font-size: 5.5vw;
+  --highlight-color-valid: black;
+}
+
+.button-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 8vh;
+  width: 100%;
+  row-gap: 2vh;
+
+  // Botón con borde afilado, sombra y texto responsive
+  ion-button {
+    width: 90%;
+    color: black;
+    --border-color: black;
+    font-size: clamp(1rem, 2.5vw + 0.5rem, 6rem);
+    --border-radius: 0;
+    // offset x, offset y, blur, color de la sombra
+    box-shadow: 0.5vw 0.5vw 2px black;
+  }
+
+  a {
+    text-decoration: underline;
+    font-size: clamp(1rem, 1vw + 0.5rem, 6rem);
+  }
+}
+
+ion-footer {
+  --background: lightgrey;
+  --color: #000000;
 }

@@ -1,64 +1,79 @@
 <ion-header>
   <ion-toolbar>
-    <h1>SkeletonAPP</h1>
+    <h1 #tituloHome>SkeletonAPP</h1>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
 
   <div>
-    <h1 class="titulo-responsive ion-text-center"><strong>¡Bienvenido!</strong></h1>
-    <p style="font-size:4.5vw;">Usuario: {{ dataLogin.usuario | titlecase }}</p>
+    <h1 
+      class="titulo-responsive ion-text-center">
+      <strong>¡Bienvenido!</strong>
+    </h1>
+    <p 
+      style="font-size:4.5vw;">
+      Usuario: {{ dataLogin.usuario | titlecase }}
+    </p>
   </div>
 
   <h2 class="content-responsive ion-text-center" style="margin-bottom: 2vh; margin-top: 6vh;">Información Adicional</h2>
 
   <ion-list>
-
+    <!--Nombre-->
     <ion-item>
       <ion-label class="label-texto">Nombre</ion-label>
       <ion-input
+        #inputNombre
         class="input-texto" 
-        [(ngModel)]="userInfo.nombre"
-        placeholder="Ingrese Nombre"
+        [(ngModel)]="userInfo.nombre" 
+        (ngModelChange)="capitalizar('nombre', $event)"
+        placeholder="Ingrese Nombre" 
         clearInput="true">
       </ion-input>
     </ion-item>
-
+    <!--Apellido-->
     <ion-item>
       <ion-label class="label-texto">Apellido</ion-label>
       <ion-input
+        #inputApellido
         class="input-texto" 
         [(ngModel)]="userInfo.apellido"
-        placeholder="Ingrese Apellido"
+        (ngModelChange)="capitalizar('apellido', $event)"
+        placeholder="Ingrese Apellido" 
         clearInput="true">
       </ion-input>
     </ion-item>
-
+    <!--Nivel de Educacion-->
     <ion-item>
       <ion-label class="label-texto">Nivel Educación</ion-label>
-      <ion-select 
-        class="input-texto"
+      <select 
+        class="input-educacion"
         [(ngModel)]="userInfo.nivelEd" 
         placeholder="Seleccione Nivel">
-          <ion-select-option value="basica">Básica</ion-select-option>
-          <ion-select-option value="media">Media</ion-select-option>
-          <ion-select-option value="tecnica">Técnica</ion-select-option>
-          <ion-select-option value="universitaria">Universitaria</ion-select-option>
-      </ion-select>
+          <option value="" disabled selected>Seleccione Nivel</option>
+          <option value="basica">Básica</option>
+          <option value="media">Media</option>
+          <option value="tecnica">Técnica</option>
+          <option value="universitaria">Universitaria</option>
+      </select>
     </ion-item>
-
+    <!--Fecha de Nacimiento-->
     <ion-item>
       <ion-label class="label-texto">Fecha Nacimiento</ion-label>
-      <ion-input
-        class="input-fecha"
-        position="fixed" 
-        [(ngModel)]="userInfo.fechaNac"
-        type="date">
-      </ion-input>
+        <div class="fecha-padre">
+          <input 
+            matInput 
+            [matDatepicker]="picker"
+            [(ngModel)]="userInfo.fechaNac"
+            class="fecha-input"
+            readonly>
+          <mat-datepicker-toggle [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </div>
     </ion-item>
   </ion-list>
-
+  <!--Botones-->
   <div class="button-row">
     <ion-button fill="outline" (click)="limpiar()">
       Limpiar

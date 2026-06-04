@@ -8,10 +8,6 @@ import { LoginPageRoutingModule } from './login-routing.module';
 
 import { LoginPage } from './login.page';
 
-import { PipesComponent } from '../components/pipes/pipes.component';
-import { ɵallowPreviousPlayerStylesMerge } from '@angular/animations/browser';
-
-
 @NgModule({
   imports: [
     CommonModule,
@@ -20,8 +16,7 @@ import { ɵallowPreviousPlayerStylesMerge } from '@angular/animations/browser';
     LoginPageRoutingModule
   ],
   declarations: [
-    LoginPage,
-    PipesComponent
+    LoginPage
   ]
 })
 export class LoginPageModule {}

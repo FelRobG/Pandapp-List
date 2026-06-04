@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 
+// import para animaciones
+import { AnimationController, Animation } from '@ionic/angular';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -9,7 +11,6 @@ import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 })
 
 export class LoginPage implements OnInit {
-
   // Generación de un modelo user con dos claves con un valor inicial.
   user = {
     usuario:'',
@@ -18,17 +19,36 @@ export class LoginPage implements OnInit {
 
   fechaHoy: Date = new Date();
 
+  @ViewChild('tituloHome', { read: ElementRef }) tituloHome!: ElementRef;
   // Se instancia el Router
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router, 
+    private animCtrl: AnimationController) { 
+  }
 
   ngOnInit() {
   }
 
-  ingresar() {
+  // Instrucciones para la animacion del titulo
+  async animTitulo() {
+    const animSkeleton = this.animCtrl.create()
+    .addElement(this.tituloHome.nativeElement)
+    .duration(900)
+    .keyframes([
+      { offset: 0, transform: 'scale(1)' },
+      // Se achica
+      { offset: 0.4, transform: 'translateX(0) scale(0.4)', opacity: '1' },
+      // Se mueve hacia la derecha, fuera de pantalla
+      { offset: 1, transform: 'translateX(110%)', opacity: '1' },
+    ]);
+    await Promise.all([animSkeleton.play()]);
+  }
+
+  async ingresar() {
     // Variables mas cortas
     const usuario = this.user.usuario;
     const contra = this.user.contra;
-
+    
     // Variable para la validacion de los caracteres del usuario
     /* 
      *'^' y '$' marcan el inicio y final de la cadena
@@ -72,6 +92,8 @@ export class LoginPage implements OnInit {
           user: this.user // Le asignamos al estado un objeto con valor
         }
       };
+      // Se ejecuta la animacion primero y luego se navega
+      await this.animTitulo();
       this.router.navigate(['/home'], navigationExtras);
   }
 }
