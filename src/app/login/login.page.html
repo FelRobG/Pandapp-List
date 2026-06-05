@@ -2,51 +2,56 @@
   <hgroup class="hgroup-login">
     <h1 
       #tituloHome 
-      class="titulo-responsive ion-text-center">
-      SkeletonAPP
+      class="ion-text-center">
+      <span style="color: #c75f30;">Panda</span>
+      <span style="color: #4c2f1c;">pp List</span>
     </h1>
     <p 
-      class="content-responsive ion-text-center">
-      Aquí comienza todo
+      class="ion-text-center">
+      Mantén tu vida en orden
     </p>
   </hgroup>
 
-
+  <img src="assets/img/Panda_rojo_fondo-removebg.png" alt="panda">
+ 
   <h1 
-    style="padding-top: 6vh;" 
     class="bienvenido ion-text-center">
     ¡Bienvenido!
   </h1>
   
-  <ion-item lines="full">
+  <div class="label-input-div">
     <!-- Usamos [(ngModel)] para indicarle al input el objeto al que darle la info-->
+    <ion-label>Usuario</ion-label>
     <ion-input  
-      class="input-texto"
-      label="Usuario" 
-      labelPlacement="stacked" 
+      fill="outline" 
       type="text" 
+      placeholder="Ingresa tu usuario"
       [(ngModel)]="user.usuario"
       clearInput="true">
     </ion-input>
-  </ion-item>
+  </div>
 
-  <ion-item lines="full">
+  <div class="label-input-div">
     <!-- Usamos [(ngModel)] para indicarle al input el objeto al que darle la info-->
+    <ion-label>Contraseña</ion-label>
     <ion-input 
-      class="input-texto" 
-      label="Contraseña" 
-      labelPlacement="stacked" 
-      type="password" 
+      fill="outline" 
+      type="password"
+      placeholder="****"
       [(ngModel)]="user.contra"
       clearInput="true">
     </ion-input>
-  </ion-item>
+  </div>
 
   <div class="button-row">
     <!-- Indicamos con (click) la funcion que llamara al presionar el boton-->
     <ion-button fill="outline" (click)="ingresar()">
-      Ingresar
+      Ingresar🐾
     </ion-button>
-    <a class="ion-text-center">Crea tu cuenta gratis</a>
   </div>
+  <div class="crea-cuenta">
+    <p>¿No tienes cuenta?</p>
+    <a>Crea tu cuenta gratis</a>
+  </div>
+
 </ion-content>
