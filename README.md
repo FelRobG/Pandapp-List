@@ -43,7 +43,7 @@
 <b>- Contador de puntos.</b>
 <b>- Página para la tienda.</b>
 <b>- ícono de candado con el precio debajo.</b>
-<b>- Preview del diseño con sus variantes de color.
+<b>- Preview del diseño con sus variantes de color.</b>
 </pre>
 
 <h2>4.- Orden y Filtro de Tareas</h2>
