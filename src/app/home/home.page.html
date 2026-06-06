@@ -1,6 +1,10 @@
 <ion-header>
   <ion-toolbar>
-    <h1 #tituloHome>SkeletonAPP</h1>
+    <h1 
+      #tituloHome>
+      <span style="color: #c75f30;">Panda</span>
+      <span style="color: #5f3d27;">pp List</span>
+    </h1>
   </ion-toolbar>
 </ion-header>
 
@@ -11,47 +15,50 @@
       class="titulo-responsive ion-text-center">
       <strong>¡Bienvenido!</strong>
     </h1>
-    <p 
-      style="font-size:4.5vw;">
-      Usuario: {{ dataLogin.usuario | titlecase }}
-    </p>
+    <span 
+      style="font-size: 4.5vw; color: #2e5c3a;">
+      Usuario: 
+    </span>
+    <span style="font-size: 4.5vw; color: #2e5c3a;">
+      {{ dataLogin.usuario }}
+    </span>
   </div>
 
   <h2 class="content-responsive ion-text-center" style="margin-bottom: 2vh; margin-top: 6vh;">Información Adicional</h2>
 
-  <ion-list>
+  <ion-list lines="none">
     <!--Nombre-->
     <ion-item>
-      <ion-label class="label-texto">Nombre</ion-label>
+      <ion-label>Nombre</ion-label>
       <ion-input
-        #inputNombre
-        class="input-texto" 
+        #inputNombre 
+        fill="outline" 
         [(ngModel)]="userInfo.nombre" 
         (ngModelChange)="capitalizar('nombre', $event)"
-        placeholder="Ingrese Nombre" 
+        placeholder="Ingresa tu Nombre" 
         clearInput="true">
       </ion-input>
     </ion-item>
     <!--Apellido-->
     <ion-item>
-      <ion-label class="label-texto">Apellido</ion-label>
+      <ion-label>Apellido</ion-label>
       <ion-input
-        #inputApellido
-        class="input-texto" 
+        #inputApellido 
+        fill="outline" 
         [(ngModel)]="userInfo.apellido"
         (ngModelChange)="capitalizar('apellido', $event)"
-        placeholder="Ingrese Apellido" 
+        placeholder="Ingresa tu Apellido" 
         clearInput="true">
       </ion-input>
     </ion-item>
     <!--Nivel de Educacion-->
     <ion-item>
-      <ion-label class="label-texto">Nivel Educación</ion-label>
+      <ion-label>Nivel Educación</ion-label>
       <select 
         class="input-educacion"
         [(ngModel)]="userInfo.nivelEd" 
         placeholder="Seleccione Nivel">
-          <option value="" disabled selected>Seleccione Nivel</option>
+          <option value="" disabled selected>Selecciona tu Nivel</option>
           <option value="basica">Básica</option>
           <option value="media">Media</option>
           <option value="tecnica">Técnica</option>
@@ -60,11 +67,12 @@
     </ion-item>
     <!--Fecha de Nacimiento-->
     <ion-item>
-      <ion-label class="label-texto">Fecha Nacimiento</ion-label>
+      <ion-label>Fecha Nacimiento</ion-label>
         <div class="fecha-padre">
           <input 
             matInput 
             [matDatepicker]="picker"
+            placeholder="Selecciona tu fecha"
             [(ngModel)]="userInfo.fechaNac"
             class="fecha-input"
             readonly>
@@ -76,10 +84,10 @@
   <!--Botones-->
   <div class="button-row">
     <ion-button fill="outline" (click)="limpiar()">
-      Limpiar
+      Limpiar🧹
     </ion-button>
     <ion-button fill="outline" (click)="mostrar()">
-      Mostrar
+      Mostrar❗
     </ion-button>
   </div>
 

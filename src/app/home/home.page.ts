@@ -77,7 +77,7 @@ export class HomePage {
   }
 
   async animarInput() {
-    // // Instrucciones para la animacion del input del nombre
+    // Instrucciones para la animacion del input del nombre
     const animNombre = this.animCtrl.create()
     .addElement(this.inputNombre.nativeElement)
     .duration(800)
@@ -124,9 +124,8 @@ export class HomePage {
     this.animTitulo();
   }
   // keyof typeof para decirle al codigo que campo es valido
-  capitalizar(campo: keyof typeof this.userInfo, texto: string) {
-    //this.userInfo[campo] = this.pipe.transform(texto);
-    //console.log(`Nombre: ${this.userInfo.nombre} ${this.userInfo.apellido}`);
+  capitalizar(campo: 'nombre' | 'apellido', texto: string) {
+    this.userInfo[campo] = this.pipe.transform(texto);
   }
 
   formatoFecha(texto: Date){
@@ -154,7 +153,8 @@ export class HomePage {
       Su nombre es  ${this.userInfo.nombre} ${this.userInfo.apellido}, 
       su nivel de educación es ${this.userInfo.nivelEd} 
       y su fecha de nacimiento es ${fecha}`,
-      buttons: ['Ok']
+      buttons: ['Ok'],
+      cssClass: 'alerta-home'
     });
     await alert.present();
   } 

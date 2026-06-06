@@ -95,3 +95,20 @@ body { margin: 0;}
 :root {
   --ion-font-family: cursive, sans-serif;
 }
+
+.alerta-home{
+  --background: #edf7f0;
+  --color: #2e5c3a;
+
+  .alert-title {
+    color: #2e5c3a;
+  }
+
+  .alert-message {
+    color: #4a7c59;
+  }
+
+  .alert-button {
+    color: #2e5c3a;
+  }
+}

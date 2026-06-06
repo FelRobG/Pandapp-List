@@ -1,0 +1,80 @@
+<ion-header>
+  <ion-toolbar>
+    <h1>
+      <span style="color: #c75f30;">Panda</span>
+      <span style="color: #5f3d27;">pp List</span>
+    </h1>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <h2 class="content-responsive ion-text-center" style="margin-bottom: 2vh; margin-top: 2vh;">
+    Registro
+  </h2>
+
+  <ion-list lines="none">
+    <ion-item>
+      <ion-label>Usuario</ion-label>
+      <ion-input
+        fill="outline"
+        [(ngModel)]="registro.usuario"
+        placeholder="Ingresa tu Usuario">
+      </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Contraseña</ion-label>
+      <ion-input
+        fill="outline"
+        type="password"
+        [(ngModel)]="registro.contra"
+        placeholder="1234">
+      </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Repetir Contraseña</ion-label>
+      <ion-input
+        fill="outline"
+        type="password"
+        [(ngModel)]="registro.contra2"
+        placeholder="1234">
+      </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Email</ion-label>
+      <ion-input
+        fill="outline"
+        type="email"
+        [(ngModel)]="registro.email"
+        placeholder="correo@ejemplo.com">
+      </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Teléfono</ion-label>
+      <ion-input
+        fill="outline"
+        type="tel"
+        [(ngModel)]="registro.tel"
+        placeholder="56912345678">
+      </ion-input>
+    </ion-item>
+  </ion-list>
+
+  <div class="button-row">
+    <ion-button fill="outline" (click)="volver()">
+      Volver↩
+    </ion-button>
+    <ion-button fill="outline" (click)="registrar()">
+      Registrar✅
+    </ion-button>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-title size="small">App desarrollada por Felipe Robles Gore</ion-title>
+  </ion-toolbar>
+</ion-footer>
