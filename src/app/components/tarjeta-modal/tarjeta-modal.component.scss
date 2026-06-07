@@ -21,32 +21,31 @@
 
     ion-input, ion-textarea, ion-select {
       --background: #edf7f0;
-      --padding-start: 10px;
-      --padding-end: 10px;
+      --padding-start: 2vw;
+      --padding-end: 2vw;
       border-radius: 8px;
-      margin-top: 4px;
+      margin-top: 0.7vh;
       color: #5f3d27;
     }
   }
 }
 
 .icono-selector {
-  margin: 8px 24px;
+  margin: 1vh 5vw;
 
   .icono-label {
     color: #5f3d27;
-    font-weight: bold;
-    font-size: clamp(0.75rem, 2vw + 0.5rem, 0.9rem);
-    margin-bottom: 8px;
+    font-size: clamp(0.75rem, 2vw + 0.5rem, 1.5rem);
+    margin-bottom: 1vh;
   }
 
   .iconos-fila {
     display: flex;
-    gap: 12px;
+    gap: 2.5vw;
 
     .icono-opcion {
-      width: 56px;
-      height: 56px;
+      width: 15vw;
+      aspect-ratio: 1 / 1;
       border-radius: 12px;
       border: 3px solid transparent;
       background: #edf7f0;
@@ -57,8 +56,8 @@
       transition: border-color 0.2s, transform 0.2s;
 
       img {
-        width: 36px;
-        height: 36px;
+        width: 11vw;
+        aspect-ratio: 1/1;
         object-fit: contain;
       }
 

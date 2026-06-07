@@ -48,7 +48,7 @@
   </ion-item>
 
   <ion-item lines="none">
-    <ion-label position="stacked">Fecha(Día, Mes, Año)</ion-label>
+    <ion-label position="stacked">Fecha (Día, Mes, Año)</ion-label>
     <ion-input type="date" [(ngModel)]="fecha"></ion-input>
   </ion-item>
 
@@ -58,7 +58,7 @@
   </ion-item>
 
   <div class="icono-selector">
-    <p class="icono-label">Ícono</p>
+    <p class="icono-label">Prioridad (Baja, Media, Alta)</p>
     <div class="iconos-fila">
       <div
         *ngFor="let ic of iconosPrio"
@@ -90,7 +90,7 @@
     <ion-buttons slot="end">
       <ion-button
         fill="solid"
-        style="--background: #2e5c3a; --color: white;"
+        style="--background: #4a7c59; --border-color: #4a7c59; --color: white;"
         (click)="guardar()">
         <!-- Cambia el texto del botón según el 'role' -->
         {{ modoEdicion ? 'Guardar Cambios' : 'Agregar Tarjeta' }}
