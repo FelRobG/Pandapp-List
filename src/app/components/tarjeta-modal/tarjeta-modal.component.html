@@ -1,0 +1,100 @@
+<ion-header>
+  <ion-toolbar style="--background: #f7ceae; --color: #5f3d27;">
+    <div class="div-nueva-tarjeta">
+    <!-- Muestra título dependiendo de el 'role'-->
+    {{ modoEdicion ? 'Editar Tarjeta' : 'Nueva Tarjeta' }}
+    </div>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancelar()">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="modal-content">
+
+  <ion-item lines="none">
+    <ion-label position="stacked">Título</ion-label>
+    <ion-input
+      [(ngModel)]="titulo"
+      placeholder="Ej: Comprar pan"
+      maxlength="50">
+    </ion-input>
+  </ion-item>
+
+  <ion-item lines="none">
+    <ion-label position="stacked">Descripción</ion-label>
+    <ion-textarea
+      [(ngModel)]="descripcion"
+      rows="3"
+      maxlength="150">
+    </ion-textarea>
+  </ion-item>
+
+  <ion-item lines="none">
+    <ion-label position="stacked">Categoría</ion-label>
+    <ion-select
+      [(ngModel)]="categoria"
+      (ngModelChange)="cambioCategoria()"
+      placeholder="Selecciona una categoría"
+      interface="popover"> <!--Tocar otro lado hace que se cierre-->
+      <ion-select-option
+        *ngFor="let cat of categorias"
+        [value]="cat.nombre">
+        {{ cat.nombre }}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item lines="none">
+    <ion-label position="stacked">Fecha(Día, Mes, Año)</ion-label>
+    <ion-input type="date" [(ngModel)]="fecha"></ion-input>
+  </ion-item>
+
+  <ion-item lines="none">
+    <ion-label position="stacked">Hora</ion-label>
+    <ion-input type="time" [(ngModel)]="hora"></ion-input>
+  </ion-item>
+
+  <div class="icono-selector">
+    <p class="icono-label">Ícono</p>
+    <div class="iconos-fila">
+      <div
+        *ngFor="let ic of iconosPrio"
+        class="icono-opcion"
+        [class.seleccionado]="iconoPrio === ic"
+        (click)="iconoPrio = ic">
+        <img [src]="ic" alt="iconoPrio" />
+      </div>
+    </div>
+  </div>
+
+  <div class="preview-insignia" *ngIf="categoria">
+    <span class="insignia" [style.background]="colorCategoria">
+      {{ categoria }}
+    </span>
+    <!-- Muestra el titulo o 'título' si no se asigna uno-->
+    <span class="preview-titulo">{{ titulo || 'Título' }}</span>
+  </div>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar style="--background: #f7ceae;">
+    <ion-buttons slot="start">
+      <ion-button fill="outline" (click)="cancelar()" style="color: red;">
+        Cancelar
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button
+        fill="solid"
+        style="--background: #2e5c3a; --color: white;"
+        (click)="guardar()">
+        <!-- Cambia el texto del botón según el 'role' -->
+        {{ modoEdicion ? 'Guardar Cambios' : 'Agregar Tarjeta' }}
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

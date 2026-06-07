@@ -1,5 +1,5 @@
 import { Component,ViewChild, ElementRef  } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 // Import de Pipes
 import { CapitalizarPipe } from '../components/pipes/capitalizar-pipe';
@@ -58,11 +58,9 @@ export class HomePage {
        
       /* El "?" sirve para decir "si existe la caja de navegacion, abrela y busca extras, si no existe,
         detente y devuelve "undefined". De esta forma no crashea la app" 
-
         * No se usa en state en este caso porque no hay nada dentro
         * Un "extra" es información adicional que viaja escondida en la memoria cuando el usuario
         navega a otra pagina. 
-      
       */
       if (this.router.currentNavigation()?.extras?.state) {// Validamos si la navegacion actual tiene extras
       
@@ -74,6 +72,18 @@ export class HomePage {
       }
     })
 
+  }
+
+  async viajarTarjetas(){
+    let navigationExtras: NavigationExtras = {
+        state: {
+          user: this.dataLogin // Le asignamos al estado un objeto con valor
+        }
+    };
+    console.log(this.dataLogin);
+    //Se ejecuta la animacion primero y luego se navega
+    //await this.animTitulo();
+    this.router.navigate(['/menu-tarjetas'], navigationExtras);
   }
 
   async animarInput() {

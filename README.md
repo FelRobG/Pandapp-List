@@ -1,4 +1,4 @@
-# SkeletonAPP
+# Pandapp List
 
 <h1>To-Do List:</h1>
 <h2>1.- Poder Agregar, Modificar y Eliminar Tareas.</h2>

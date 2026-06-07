@@ -88,12 +88,12 @@ export class LoginPage implements OnInit {
     // Se declara e instancia el elemento NavigationExtras
     // Sirve para interpolar datos (pasar datos de un Page a otro)
     let navigationExtras: NavigationExtras = {
-        state: {
-          user: this.user // Le asignamos al estado un objeto con valor
-        }
-      };
-      // Se ejecuta la animacion primero y luego se navega
-      await this.animTitulo();
-      this.router.navigate(['/home'], navigationExtras);
+      state: {
+        user: this.user // Le asignamos al estado un objeto con valor
+      }
+    };
+    // Se ejecuta la animacion primero y luego se navega
+    await this.animTitulo();
+    this.router.navigate(['/menu-tarjetas'], navigationExtras);
   }
 }

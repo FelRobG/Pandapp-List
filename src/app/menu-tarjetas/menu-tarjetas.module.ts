@@ -8,6 +8,8 @@ import { MenuTarjetasPageRoutingModule } from './menu-tarjetas-routing.module';
 
 import { MenuTarjetasPage } from './menu-tarjetas.page';
 
+import { TarjetaModalComponent } from '../components/tarjeta-modal/tarjeta-modal.component';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -15,6 +17,6 @@ import { MenuTarjetasPage } from './menu-tarjetas.page';
     IonicModule,
     MenuTarjetasPageRoutingModule
   ],
-  declarations: [MenuTarjetasPage]
+  declarations: [MenuTarjetasPage, TarjetaModalComponent]
 })
 export class MenuTarjetasPageModule {}
