@@ -1,63 +1,111 @@
-<ion-header>
-  <ion-toolbar>
-    <h1 style="width: 80%;">
-      <span style="color: #c75f30;">Panda</span>
-      <span style="color: #5f3d27;">pp List</span>
-    </h1>
-    <ion-button slot="end" (click)="viajarPerfil()">Perfil</ion-button>
-  </ion-toolbar>
-</ion-header>
+<ion-menu contentId="menu-tarjetas-content" side="end">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Más opciones</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item (click)="viajarPerfil()">
+        <ion-icon name="person-sharp" slot="start"></ion-icon>
+        <ion-label>Perfil</ion-label>
+      </ion-item>
 
-<ion-content>
-  <div class="filtros-row">
-    <ion-button (click)="filtrar()">Filtros</ion-button>
-    <ion-button (click)="ordenar()">Ordenar</ion-button>
-  </div>
+      <ion-item (click)="viajarApiTareas()">
+        <ion-icon name="duplicate-sharp" slot="start"></ion-icon>
+        <ion-label>Tareas API</ion-label>
+      </ion-item>
 
-  <!-- Boton para agregar una tarjeta nueva -->
-  <div class="acciones-row">
-    <ion-button class="btn-agregar" (click)="agregar()">+</ion-button>
-  </div>
+      <ion-item (click)="viajarMapa()">
+        <ion-icon name="map-outline" slot="start"></ion-icon>
+        <ion-label>Mapa</ion-label>
+      </ion-item>
 
-  <!-- Grid de tarjetas -->
-  <ion-grid>
-    <ion-row>
-      <!-- Crear objeto tipo 'tarjetas'-->
-      <!-- size="6" hace que cada columna ocupe 6 de los 12 espacios de una row-->
-      <ion-col size="6" *ngFor="let tarjeta of tarjetas; let i = index">
-        <ion-card>
-          <!-- Header de la tarjeta con categoría e icono -->
-          <div class="tarjeta-header">
-            <!-- Toma el color de fondo del archivo .ts-->
-            <span class="cat-insignia ion-text-center" [style.background]="tarjeta.colorCategoria">
-              {{ tarjeta.categoria }}
-            </span>
-            <img 
-            style="width: 4vw; aspect-ratio: 1 / 1.3;" 
-            [src]="tarjeta.iconoPrio" 
-            *ngIf="tarjeta.iconoPrio">
-          </div>
-          <!-- Imagen azul -->
-          <div class="tarjeta-img" style="color: black">{{ tarjeta.descripcion }}</div>
-          <!-- Info -->
-          <ion-card-content>
-            <p class="tarjeta-titulo">{{ tarjeta.titulo }}</p>
-            <p>{{ tarjeta.fecha }}</p>
-            <p>{{ tarjeta.hora }}</p>
-            <div class="div-eliminar">
-              <ion-button class="btn-eliminar" (click)="eliminar(i)">🗑️</ion-button>
+      <ion-item (click)="viajarCamara()">
+        <ion-icon name="camera-outline" slot="start"></ion-icon>
+        <ion-label>Cámara</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<div id="menu-tarjetas-content">
+
+  <ion-header>
+    <ion-toolbar>
+      <h1 #tituloMenu style="width: 80%;">
+        <span style="color: #c75f30;">Panda</span>
+        <span style="color: #5f3d27;">pp List</span>
+      </h1>
+      <ion-buttons slot="end">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <div class="filtros-row">
+      <ion-select 
+        class="ion-text-center"
+        placeholder="Filtrar"
+        (ionChange)="filtrar($event.detail.value)"
+        interface="popover">
+        <ion-select-option value="">Todos</ion-select-option>
+        <ion-select-option value="Personal">Personal</ion-select-option>
+        <ion-select-option value="Compras">Compras</ion-select-option>
+        <ion-select-option value="Cocina">Cocina</ion-select-option>
+        <ion-select-option value="Trabajo">Trabajo</ion-select-option>
+        <ion-select-option value="Estudio">Estudio</ion-select-option>
+        <ion-select-option value="Ejercicio">Ejercicio</ion-select-option>
+        <ion-select-option value="Deporte">Deporte</ion-select-option>
+        <ion-select-option value="Otro">Otro</ion-select-option>
+        
+      </ion-select>
+      <ion-select 
+        placeholder="Ordenar"
+        (ionChange)="ordenar($event.detail.value)"
+        interface="popover">
+        <ion-select-option value="fecha">Por fecha</ion-select-option>
+        <ion-select-option value="titulo">Por título</ion-select-option>
+      </ion-select>
+    </div>
+
+    <div class="acciones-row">
+      <ion-button class="btn-agregar" (click)="agregar()">+</ion-button>
+    </div>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col size="6" *ngFor="let tarjeta of tarjetasFiltradas; let i = index">
+          <ion-card>
+            <div class="tarjeta-header">
+              <span class="cat-insignia ion-text-center" [style.background]="tarjeta.colorCategoria">
+                {{ tarjeta.categoria }}
+              </span>
+              <img 
+              style="width: 4vw; aspect-ratio: 1 / 1.3;" 
+              [src]="tarjeta.iconoPrio" 
+              *ngIf="tarjeta.iconoPrio">
             </div>
-            
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+            <div class="tarjeta-img" style="color: black; white-space: pre-wrap;">{{ tarjeta.descripcion }}</div>
+            <ion-card-content>
+              <p class="tarjeta-titulo">{{ tarjeta.titulo }}</p>
+              <p>{{ tarjeta.fecha | date:'dd/MM/yyyy' }}</p>
+              <p>{{ tarjeta.fecha | date:'hh:mm a' }}</p>
+              <div class="div-eliminar">
+                <ion-button class="btn-eliminar" (click)="eliminar(i)">🗑️</ion-button>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-content>
 
-</ion-content>
+  <ion-footer>
+    <ion-toolbar>
+      <ion-title size="small">App desarrollada por Felipe Robles Gore</ion-title>
+    </ion-toolbar>
+  </ion-footer>
 
-<ion-footer>
-  <ion-toolbar>
-    <ion-title size="small">App desarrollada por Felipe Robles Gore</ion-title>
-  </ion-toolbar>
-</ion-footer>
+</div>

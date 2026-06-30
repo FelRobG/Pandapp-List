@@ -14,6 +14,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
+// Import de Componentes
+import { CertificacionesComponent } from '../components/certificaciones/certificaciones.component';
+import { ExperienciaLaboralComponent } from '../components/experiencia-laboral/experiencia-laboral.component';
+import { MisDatosComponent } from '../components/mis-datos/mis-datos.component';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -23,9 +28,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatDatepickerModule,
     MatInputModule,
     MatNativeDateModule,
-    MatFormFieldModule
+    MatFormFieldModule,
   ],
   providers: [CapitalizarPipe, DatePipe],
-  declarations: [HomePage]
+  declarations: [
+    HomePage, 
+    MisDatosComponent, 
+    ExperienciaLaboralComponent, 
+    CertificacionesComponent
+  ]
 })
 export class HomePageModule {}

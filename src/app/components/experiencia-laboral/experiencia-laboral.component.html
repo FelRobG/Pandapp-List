@@ -1,0 +1,61 @@
+<div style="padding: 1.5vw;">
+  <h2 
+    class="content-responsive ion-text-center" 
+    style="margin-bottom: 2vh; margin-top: 6vh;">
+    Crear Informe de Experiencia Laboral
+  </h2>
+
+  <ion-list lines="none">
+    <ion-item>
+      <ion-label>Empresa</ion-label>
+      <ion-input
+        #inputEmpresa
+        [(ngModel)]="experiencia.empresa"
+        placeholder="Nombre de la empresa"
+        fill="outline">
+      </ion-input>
+    </ion-item>
+    <!-- Cargo -->
+    <ion-item>
+      <ion-label>Cargo</ion-label>
+      <ion-input
+        #inputCargo
+        [(ngModel)]="experiencia.cargo"
+        placeholder="Tu cargo"
+        fill="outline">
+      </ion-input>
+    </ion-item>
+    <!-- Año de inicio-->
+    <ion-item>
+      <ion-label>Año Inicio</ion-label>
+      <ion-input
+        [(ngModel)]="experiencia.annoInicio"
+        type="number"
+        placeholder="Ej: 2020"
+        fill="outline">
+      </ion-input>
+    </ion-item>
+    <!-- Checkbox de si trabaja actualmente -->
+    <ion-item>
+      <ion-label>¿Trabaja actualmente?</ion-label>
+      <ion-checkbox
+        [(ngModel)]="experiencia.trabajaActualmente">
+      </ion-checkbox>
+    </ion-item>
+    <!-- Año termino solo si no trabaja actualmente -->
+    <ion-item *ngIf="!experiencia.trabajaActualmente">
+      <ion-label>Año Término</ion-label>
+      <ion-input
+        [(ngModel)]="experiencia.annoTermino"
+        type="number"
+        placeholder="Ej: 2023"
+        fill="outline">
+      </ion-input>
+    </ion-item>
+  </ion-list>
+
+  <div class="button-row">
+    <ion-button fill="outline" (click)="limpiar()">Limpiar 🧹</ion-button>
+    <ion-button fill="outline" (click)="guardar()">Guardar💾</ion-button>
+  </div>
+</div>

@@ -13,7 +13,7 @@
 </ion-header>
 
 <ion-content class="modal-content">
-
+  <!-- TITULO -->
   <ion-item lines="none">
     <ion-label position="stacked">Título</ion-label>
     <ion-input
@@ -22,16 +22,16 @@
       maxlength="50">
     </ion-input>
   </ion-item>
-
+  <!-- DESCRIPCION -->
   <ion-item lines="none">
     <ion-label position="stacked">Descripción</ion-label>
     <ion-textarea
       [(ngModel)]="descripcion"
-      rows="3"
+      rows="8"
       maxlength="150">
     </ion-textarea>
   </ion-item>
-
+  <!-- CATEGORIA -->
   <ion-item lines="none">
     <ion-label position="stacked">Categoría</ion-label>
     <ion-select
@@ -46,16 +46,40 @@
       </ion-select-option>
     </ion-select>
   </ion-item>
-
+  <!-- FECHA -->
   <ion-item lines="none">
-    <ion-label position="stacked">Fecha (Día, Mes, Año)</ion-label>
-    <ion-input type="date" [(ngModel)]="fecha"></ion-input>
+    <ion-label position="stacked">Fecha</ion-label>
+    <div>
+      <input 
+        matInput 
+        [matDatepicker]="picker"
+        placeholder="Selecciona tu fecha"
+        [(ngModel)]="fecha"
+        class="fecha-input"
+        readonly>
+      <mat-datepicker-toggle [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </div>
   </ion-item>
-
+  <!-- HORA -->
   <ion-item lines="none">
     <ion-label position="stacked">Hora</ion-label>
-    <ion-input type="time" [(ngModel)]="hora"></ion-input>
+    <ion-datetime-button datetime="hora"></ion-datetime-button>
+    <ion-popover [keepContentsMounted]="true">
+      <ng-template>
+        <ion-datetime 
+          id="hora" 
+          locale="es-ES"
+          presentation="time"
+          preferWheel="true"
+          hourCycle="h12"
+          [(ngModel)]="hora">
+        </ion-datetime>
+      </ng-template>
+    </ion-popover>
   </ion-item>
+
+  
 
   <div class="icono-selector">
     <p class="icono-label">Prioridad (Baja, Media, Alta)</p>

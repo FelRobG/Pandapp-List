@@ -1,7 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <h1 
-      #tituloHome>
+    <h1 #tituloHome>
       <span style="color: #c75f30;">Panda</span>
       <span style="color: #5f3d27;">pp List</span>
     </h1>
@@ -9,89 +8,35 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-toolbar>
+  <ion-segment [(ngModel)]="segmentActivo" value="misDatos">
+    <ion-segment-button value="misDatos">
+      <ion-icon name="information-circle"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button value="experiencia">
+      <ion-icon name="business"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button value="certificaciones">
+      <ion-icon name="newspaper"></ion-icon>
+    </ion-segment-button>
+  </ion-segment>
+</ion-toolbar>
 
-  <div>
-    <h1 
-      class="titulo-responsive ion-text-center">
-      <strong>¡Bienvenido!</strong>
-    </h1>
-    <span 
-      style="font-size: 4.5vw; color: #2e5c3a;">
-      Usuario: 
-    </span>
-    <span style="font-size: 4.5vw; color: #2e5c3a;">
-      {{ dataLogin.usuario }}
-    </span>
-  </div>
+<ion-content>
+  
+  <app-mis-datos
+  *ngIf="segmentActivo === 'misDatos'"   
+  [dataLogin]="dataLogin">
+  </app-mis-datos>
 
-  <h2 class="content-responsive ion-text-center" style="margin-bottom: 2vh; margin-top: 6vh;">Información Adicional</h2>
+  <app-experiencia-laboral
+    *ngIf="segmentActivo === 'experiencia'"
+    [dataLogin]="dataLogin">
+  </app-experiencia-laboral>
 
-  <ion-list lines="none">
-    <!--Nombre-->
-    <ion-item>
-      <ion-label>Nombre</ion-label>
-      <ion-input
-        #inputNombre 
-        fill="outline" 
-        [(ngModel)]="userInfo.nombre" 
-        (ngModelChange)="capitalizar('nombre', $event)"
-        placeholder="Ingresa tu Nombre" 
-        clearInput="true">
-      </ion-input>
-    </ion-item>
-    <!--Apellido-->
-    <ion-item>
-      <ion-label>Apellido</ion-label>
-      <ion-input
-        #inputApellido 
-        fill="outline" 
-        [(ngModel)]="userInfo.apellido"
-        (ngModelChange)="capitalizar('apellido', $event)"
-        placeholder="Ingresa tu Apellido" 
-        clearInput="true">
-      </ion-input>
-    </ion-item>
-    <!--Nivel de Educacion-->
-    <ion-item>
-      <ion-label>Nivel Educación</ion-label>
-      <select 
-        class="input-educacion"
-        [(ngModel)]="userInfo.nivelEd" 
-        placeholder="Seleccione Nivel">
-          <option value="" disabled selected>Selecciona tu Nivel</option>
-          <option value="basica">Básica</option>
-          <option value="media">Media</option>
-          <option value="tecnica">Técnica</option>
-          <option value="universitaria">Universitaria</option>
-      </select>
-    </ion-item>
-    <!--Fecha de Nacimiento-->
-    <ion-item>
-      <ion-label>Fecha Nacimiento</ion-label>
-        <div class="fecha-padre">
-          <input 
-            matInput 
-            [matDatepicker]="picker"
-            placeholder="Selecciona tu fecha"
-            [(ngModel)]="userInfo.fechaNac"
-            class="fecha-input"
-            readonly>
-          <mat-datepicker-toggle [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-        </div>
-    </ion-item>
-  </ion-list>
-  <!--Botones-->
-  <div class="button-row">
-    <ion-button fill="outline" (click)="limpiar()">
-      Limpiar🧹
-    </ion-button>
-    <ion-button fill="outline" (click)="mostrar()">
-      Mostrar❗
-    </ion-button>
-  </div>
-
+  <app-certificaciones
+    *ngIf="segmentActivo === 'certificaciones'">
+  </app-certificaciones>
 </ion-content>
 
 <ion-footer>

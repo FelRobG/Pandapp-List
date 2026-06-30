@@ -91,9 +91,9 @@ body {
 
 html, body { height: 100%; }
 body { margin: 0;}
-*{font-family: cursive;}
+*{font-family: 'Baloo 2' ;}
 :root {
-  --ion-font-family: cursive, sans-serif;
+  --ion-font-family: 'Baloo 2' , sans-serif;
 }
 
 .alerta-home{
@@ -111,4 +111,17 @@ body { margin: 0;}
   .alert-button {
     color: #2e5c3a;
   }
+}
+
+.mat-datepicker-content {
+  background-color: white !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2) !important;
+}
+
+.mat-calendar {
+  background-color: white !important;
+}
+
+body {
+  background-color: transparent !important;
 }

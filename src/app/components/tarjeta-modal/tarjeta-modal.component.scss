@@ -27,6 +27,20 @@
       margin-top: 0.7vh;
       color: #5f3d27;
     }
+    
+    div {
+      display: flex;
+      align-items: center;
+      justify-content: end;
+
+      input {
+        border: 0.3vw solid #bdbdbd;
+        background: #edf7f0;
+        outline: none;
+        color: #5f3d27;
+        border-radius: 3px;
+      }
+    }
   }
 }
 

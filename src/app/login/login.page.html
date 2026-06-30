@@ -26,7 +26,7 @@
       fill="outline" 
       type="text" 
       placeholder="Ingresa tu usuario"
-      [(ngModel)]="user.usuario"
+      [(ngModel)]="user.user_name"
       clearInput="true">
     </ion-input>
   </div>
@@ -51,7 +51,7 @@
   </div>
   <div class="crea-cuenta">
     <p>¿No tienes cuenta?</p>
-    <a routerLink="/registro">Crea tu cuenta gratis</a>
+    <a (click)="viajeRegistro()">Crea tu cuenta gratis</a>
   </div>
 
 </ion-content>

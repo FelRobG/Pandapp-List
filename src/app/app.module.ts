@@ -14,10 +14,23 @@ import localeEs from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
 registerLocaleData(localeEs);
 
+// Imports Para SQLite e Ionic Storage
+import { SQLite } from '@awesome-cordova-plugins/sqlite/ngx';
+import { IonicStorageModule } from '@ionic/storage-angular';
+
+import { HttpClientModule } from '@angular/common/http';
+
 @NgModule({
   declarations: [AppComponent, /*PipesComponent*/],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, BrowserAnimationsModule],
+  imports: [
+    BrowserModule, 
+    IonicModule.forRoot(), 
+    AppRoutingModule, 
+    BrowserAnimationsModule, 
+    IonicStorageModule.forRoot(), 
+    HttpClientModule],
   providers: [
+    SQLite,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, 
     { provide: LOCALE_ID, useValue: 'es'}
   ],

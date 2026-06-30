@@ -1,8 +1,12 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
-
+import { NavigationExtras, Router } from '@angular/router';
 // import para animaciones
-import { AnimationController, Animation } from '@ionic/angular';
+import { AnimationController } from '@ionic/angular';
+
+import { AlertController } from '@ionic/angular';
+
+import { DbTaskService } from '../services/db-task';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -13,7 +17,7 @@ import { AnimationController, Animation } from '@ionic/angular';
 export class LoginPage implements OnInit {
   // Generación de un modelo user con dos claves con un valor inicial.
   user = {
-    usuario:'',
+    user_name:'',
     contra:''
   }
 
@@ -23,7 +27,9 @@ export class LoginPage implements OnInit {
   // Se instancia el Router
   constructor(
     private router: Router, 
-    private animCtrl: AnimationController) { 
+    private animCtrl: AnimationController,
+    private alert: AlertController,
+    private dbTask: DbTaskService) { 
   }
 
   ngOnInit() {
@@ -39,14 +45,29 @@ export class LoginPage implements OnInit {
       // Se achica
       { offset: 0.4, transform: 'translateX(0) scale(0.4)', opacity: '1' },
       // Se mueve hacia la derecha, fuera de pantalla
-      { offset: 1, transform: 'translateX(110%)', opacity: '1' },
+      { offset: 1, transform: 'translateX(110%)', opacity: '1' }
     ]);
     await Promise.all([animSkeleton.play()]);
+  }
+  async animTituloEntrada() {
+    const tituloEntrada = this.animCtrl.create()
+      .addElement(this.tituloHome.nativeElement)
+      .duration(0)
+      .keyframes([
+        { offset: 1, transform: 'translateX(0)', opacity: '1' }
+      ]);
+    await tituloEntrada.play();
+  }
+  ionViewWillEnter() {
+    // Resetea la posicion del titulo al volver a login
+    this.tituloHome.nativeElement.style.transform = 'translateX(0) scale(1)';
+    this.tituloHome.nativeElement.style.opacity = '0';
+    this.animTituloEntrada();
   }
 
   async ingresar() {
     // Variables mas cortas
-    const usuario = this.user.usuario;
+    const user_name = this.user.user_name;
     const contra = this.user.contra;
     
     // Variable para la validacion de los caracteres del usuario
@@ -55,38 +76,28 @@ export class LoginPage implements OnInit {
      *'[a-zA-Z0-9]' acepta cualquier letra y numeros del 0 al 9
      *'+' exige que haya al menos uno o mas caracteres
     */
-    const alfanumerico = /^[a-zA-Z0-9]+$/.test(usuario);
+    const alfanumerico = /^[a-zA-Z0-9]+$/.test(user_name);
     // Variable para la validacion de la longitud del usuario
-    const longitudUsuario = usuario.length >= 3 && usuario.length <= 8;
+    const longitudUsuario = user_name.length >= 3 && user_name.length <= 8;
 
     // Variable para la validación de contraseña con 4 digitos
     // * '{4}' Indica que solo se admiten contraseñas con longitud = 4
     const contraValida = /^[0-9]{4}$/.test(contra);
-
-
-    if (!alfanumerico) {
-      console.log('Error: El usuario solo puede contener letras y números.');
-      return
-    }
-
-    if (!longitudUsuario) {
-      console.log('Error: El usuario debe tener entre 3 y 8 caracteres.');
+    // Compara con la base de datos
+    const valido = await this.dbTask.validarUsuario(user_name, contra);
+    if (!valido) {
+      const alert = await this.alert.create({
+        header: 'Usuario',
+        message: `Usuario o contraseña incorrectos.`,
+        buttons: ['Ok'],
+        cssClass: 'alerta-home'
+      });
+      await alert.present();
       return;
     }
-
-    if (!contraValida) {
-      console.log('Error: La contraseña debe ser de exactamente 4 números.');
-      return;
-    }
-
-    // Validamos que el usuario Y la contraseña coincidan
-    if (usuario !== 'pepito' || contra !== '1234') {
-      console.log('Error: Usuario o contraseña incorrectos');
-      return;
-    }
-
     // Se declara e instancia el elemento NavigationExtras
     // Sirve para interpolar datos (pasar datos de un Page a otro)
+    await this.dbTask.activarSesion(user_name); 
     let navigationExtras: NavigationExtras = {
       state: {
         user: this.user // Le asignamos al estado un objeto con valor
@@ -95,5 +106,10 @@ export class LoginPage implements OnInit {
     // Se ejecuta la animacion primero y luego se navega
     await this.animTitulo();
     this.router.navigate(['/menu-tarjetas'], navigationExtras);
+  }
+
+  async viajeRegistro(){
+    await this.animTitulo();
+    this.router.navigate(['/registro']);
   }
 }

@@ -1,30 +1,60 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 // Import para el manejo de las tarjetas
 import { ModalController } from '@ionic/angular';
 import { TarjetaModalComponent } from '../components/tarjeta-modal/tarjeta-modal.component';
+// Import para animaciones
+import { AnimationController} from '@ionic/angular';
 
+import { DbTaskService } from '../services/db-task';
 @Component({
   selector: 'app-menu-tarjetas',
   templateUrl: './menu-tarjetas.page.html',
   styleUrls: ['./menu-tarjetas.page.scss'],
   standalone: false,
 })
-export class MenuTarjetasPage implements OnInit {
+export class MenuTarjetasPage  {
 
   dataLogin: any;// Crea una variable de tipo any (admite cualquier valor)
+  // tarjetas default
+  tarjetas: any[] = [];
 
-  tarjetas = [
-    { titulo: 'Compras', descripcion: 'Comprar 10 panes, 1 jugo Watts y 1/4 de láminas de queso', fecha: '2026-06-07', hora: '5:00 pm', categoria: 'Deporte', colorCategoria: 'yellow', iconoPrio: 'assets/img/insignia_amarilla.png' },
-    { titulo: 'Ejercicios', descripcion: 'Calentamiento: trotar 5 minutos, 10 sentadillas, 20 pushups', fecha: '2026-06-10', hora: '7:03 pm', categoria: 'Estudio', colorCategoria: 'green', iconoPrio: 'assets/img/insignia_roja.png' },
-    { titulo: 'Estudios', descripcion: '1 hora de repaso en matemáticas, descanso de 15 minutos y 1 hora de lectura', fecha: '2026-07-14', hora: '10:00 am', categoria: 'Ejercicio', colorCategoria: 'cyan', iconoPrio: 'assets/img/insignia_verde.png' },
-    { titulo: 'Recibir pedido', descripcion: 'Abrir el portón para el pedido de MercadoLibre', fecha: '2026-08-08', hora: '10:30 pm', categoria: 'Otro', colorCategoria: 'red', iconoPrio: 'assets/img/insignia_amarilla.png' },
-  ];
-  
+  tarjetasFiltradas: any[] = [];
+  criterioFiltro: string = '';
+  criterioOrden: string = '';
+
+  filtrar(criterio: string) {
+    this.criterioFiltro = criterio;
+    if (!criterio) {
+      this.tarjetasFiltradas = [...this.tarjetas];
+      return;
+    }
+    this.tarjetasFiltradas = this.tarjetas.filter(t => 
+      t.categoria.toLowerCase() === criterio.toLowerCase()
+    );
+  }
+
+  ordenar(criterio: string) {
+    this.criterioOrden = criterio;
+    this.tarjetasFiltradas = [...this.tarjetasFiltradas].sort((a, b) => {
+      if (criterio === 'fecha') {
+        return new Date(a.fecha).getTime() - new Date(b.fecha).getTime();
+      }
+      if (criterio === 'titulo') {
+        return a.titulo.localeCompare(b.titulo);
+      }
+      return 0;
+    });
+  }
+
+
+  @ViewChild('tituloMenu', { read: ElementRef }) tituloMenu!: ElementRef;
   constructor(
     private modalCtrl: ModalController, 
     private activeRoute: ActivatedRoute, 
-    private router: Router, ) {
+    private router: Router,
+    private animCtrl: AnimationController,
+    private dbTask: DbTaskService) {
     /* Se llama a la ruta ⬆️ activa y se obtienen sus parametros mediante una suscripcion
 
       * subscribe permite escuchar de forma reactiva los cambios en la URL. Se utiliza cuando un usuario
@@ -42,68 +72,120 @@ export class MenuTarjetasPage implements OnInit {
       */
       if (this.router.currentNavigation()?.extras?.state) {// Validamos si la navegacion actual tiene extras
         this.dataLogin = this.router.currentNavigation()?.extras?.state?.['user']; // Si tiene extras, rescata lo enviado
-        console.log(this.dataLogin); // Muestra lo rescatado en consola
-      }else {
-        this.router.navigate(['/login']); // Si no tiene extras, envia la navegacion de vuelta al login
       }
     })
   }
 
+  // Instrucciones de animacion cuando se va al perfil
+  async animTituloCambio() {
+    const animSkeleton2 = this.animCtrl.create()
+    .addElement(this.tituloMenu.nativeElement)
+    .duration(500)
+    .keyframes([
+      { offset: 0, transform: 'translateX(0)'},
+      { offset: 1, transform: 'translateX(180%)'}
+    ]);
+    await Promise.all([animSkeleton2.play()]);
+  }
+
   async viajarPerfil(){
+    await this.animTituloCambio();
     let navigationExtras: NavigationExtras = {
         state: {
           user: this.dataLogin // Le asignamos al estado un objeto con valor
         }
     };
-    console.log(this.dataLogin);
-    //Se ejecuta la animacion primero y luego se navega
-    //await this.animTitulo();
     this.router.navigate(['/home'], navigationExtras);
+  }
+
+  async viajarApiTareas() {
+    await this.animTituloCambio();
+    let navigationExtras: NavigationExtras = {
+      state: { user: this.dataLogin }
+    };
+    this.router.navigate(['/api-tareas'], navigationExtras);
+  }
+
+  viajarMapa() {
+    let navigationExtras: NavigationExtras = {
+      state: { user: this.dataLogin }
+    };
+    this.router.navigate(['/mapa'], navigationExtras);
+  }
+
+  viajarCamara() {
+    let navigationExtras: NavigationExtras = {
+      state: { user: this.dataLogin }
+    };
+    this.router.navigate(['/camara'], navigationExtras);
   }
 
   // Crear tarjeta nueva
   async agregar() {
-
     const modal = await this.modalCtrl.create({
       component: TarjetaModalComponent
     });
     await modal.present();
     const { data, role } = await modal.onWillDismiss();
 
-    if (data && role === 'guardar' ) {
-      this.tarjetas.push(data);
+    if (data && role === 'guardar') {
+      await this.dbTask.agregarTarjeta(this.dataLogin?.user_name, data);
+      this.tarjetas = await this.dbTask.obtenerTarjetas(this.dataLogin?.user_name);
+      this.filtrar(this.criterioFiltro);
     }
-    
   }
 
-  // Editar tarjeta existente
   async editar(index: number) {
-
     const modal = await this.modalCtrl.create({
       component: TarjetaModalComponent,
       componentProps: {
-        tarjeta: { ...this.tarjetas[index] }
+        tarjeta: { ...this.tarjetasFiltradas[index] }
       }
     });
-
     await modal.present();
     const { data, role } = await modal.onWillDismiss();
 
     if (data && role === 'guardar') {
-      this.tarjetas[index] = data;
+      await this.dbTask.editarTarjeta(this.tarjetasFiltradas[index].id, data);
+      this.tarjetas = await this.dbTask.obtenerTarjetas(this.dataLogin?.user_name);
+      this.filtrar(this.criterioFiltro);
     }
-
-  }
- 
-  // Eliminar tarjeta
-  eliminar(index: number) {
-    this.tarjetas.splice(index, 1);
   }
 
-  filtrar() {}
-  ordenar() {}
-  
-  ngOnInit() {
+  async eliminar(index: number) {
+    await this.dbTask.eliminarTarjeta(this.tarjetasFiltradas[index].id);
+    this.tarjetas = await this.dbTask.obtenerTarjetas(this.dataLogin?.user_name);
+    this.filtrar(this.criterioFiltro);
+  }
+
+  async animTitulo() {
+    const animSkeleton = this.animCtrl.create()
+    .addElement(this.tituloMenu.nativeElement)
+    .duration(800)
+    .keyframes([
+      // Inicia fuera de pantalla
+      { offset: 0, transform: 'translateX(-50%)', opacity: '1' },
+      // Simula animacion de rebote
+      { offset: 0.4, transform: 'translateX(15%)', opacity: '1' },
+      { offset: 0.55, transform: 'translateX(0)', opacity: '1' },
+      { offset: 0.7, transform: 'translateX(15%)', opacity: '1' },
+      { offset: 1, transform: 'translateX(0)', opacity: '1' }
+    ]);
+    await Promise.all([animSkeleton.play()]);
+  }
+
+  // Ocultar skeletonAPP antes de la animacion
+  ionViewWillEnter() {
+    this.tituloMenu.nativeElement.style.opacity = '0';
+  }
+  // Ejecutar animacion al entrar y obtener tarjetas para evitar que este vacio
+  async ionViewDidEnter() {
+    this.animTitulo();
+    const tarjetasDB = await this.dbTask.obtenerTarjetas(this.dataLogin?.user_name);
+    if (tarjetasDB.length > 0) {
+      this.tarjetas = tarjetasDB;
+      this.tarjetasFiltradas = [...this.tarjetas];
+    }
   }
 
 }

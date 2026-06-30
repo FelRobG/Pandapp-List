@@ -1,11 +1,11 @@
-import { Component,ViewChild, ElementRef  } from '@angular/core';
+import { Component, ViewChild, ElementRef} from '@angular/core';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 // Import de Pipes
 import { CapitalizarPipe } from '../components/pipes/capitalizar-pipe';
 import { DatePipe } from '@angular/common';
 // Import para animaciones
-import { AnimationController, Animation } from '@ionic/angular';
+import { AnimationController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home', // Nombre del selector
@@ -16,6 +16,7 @@ import { AnimationController, Animation } from '@ionic/angular';
 
 export class HomePage {
 
+  segmentActivo: String = 'misDatos';
   // Informacion adicional del usuario
   userInfo = {
     nombre:'',
@@ -27,7 +28,6 @@ export class HomePage {
   dataLogin: any; // Crea una variable de tipo any (admite cualquier valor)
   
   /*
-
     * Se colocan los siguientes parametros 
     * private = visibilidad
     * activeRoute = identificador
@@ -63,24 +63,31 @@ export class HomePage {
         navega a otra pagina. 
       */
       if (this.router.currentNavigation()?.extras?.state) {// Validamos si la navegacion actual tiene extras
-      
         this.dataLogin = this.router.currentNavigation()?.extras?.state?.['user']; // Si tiene extras, rescata lo enviado
-        console.log(this.dataLogin); // Muestra lo rescatado en consola
-        
-      }else {
-        this.router.navigate(['/login']); // Si no tiene extras, envia la navegacion de vuelta al login
       }
     })
 
   }
 
+  // Instrucciones de animacion cuando se va al perfil
+  async animTituloCambio() {
+    const animSkeleton2 = this.animCtrl.create()
+    .addElement(this.tituloHome.nativeElement)
+    .duration(500)
+    .keyframes([
+      { offset: 0, transform: 'translateX(0)'},
+      { offset: 1, transform: 'translateX(180%)'}
+    ]);
+    await Promise.all([animSkeleton2.play()]);
+  }
+
   async viajarTarjetas(){
+    await this.animTituloCambio();
     let navigationExtras: NavigationExtras = {
         state: {
           user: this.dataLogin // Le asignamos al estado un objeto con valor
         }
     };
-    console.log(this.dataLogin);
     //Se ejecuta la animacion primero y luego se navega
     //await this.animTitulo();
     this.router.navigate(['/menu-tarjetas'], navigationExtras);
@@ -118,54 +125,18 @@ export class HomePage {
       // Inicia fuera de pantalla
       { offset: 0, transform: 'translateX(-50%)', opacity: '1' },
       // Simula animacion de rebote
-      { offset: 0.4, transform: 'translateX(20%)', opacity: '1' },
+      { offset: 0.4, transform: 'translateX(15%)', opacity: '1' },
       { offset: 0.55, transform: 'translateX(0)', opacity: '1' },
-      { offset: 0.7, transform: 'translateX(20%)', opacity: '1' },
+      { offset: 0.7, transform: 'translateX(15%)', opacity: '1' },
       { offset: 1, transform: 'translateX(0)', opacity: '1' }
     ]);
     await Promise.all([animSkeleton.play()]);
   }
-  // Ocultar skeletonAPP antes de la animacion
+  
+  // Ocultar Pandapp antes de la animacion
   ionViewWillEnter() {
+    this.animTitulo();
     this.tituloHome.nativeElement.style.opacity = '0';
   }
-  // Ejecutar animacion al entrar
-  ionViewDidEnter() {
-    this.animTitulo();
-  }
-  // keyof typeof para decirle al codigo que campo es valido
-  capitalizar(campo: 'nombre' | 'apellido', texto: string) {
-    this.userInfo[campo] = this.pipe.transform(texto);
-  }
 
-  formatoFecha(texto: Date){
-    //this.userInfo.fechaNac = this.datePipe.transform(texto, 'dd/MM/yyyy')
-    console.log(`fecha: ${this.userInfo.fechaNac}`)
-  }
-
-  animarNombre: boolean = false;
-  animarApellido: boolean = false;
-
-  limpiar() {
-    this.animarInput();
-    this.userInfo.nombre = '';
-    this.userInfo.apellido = '';
-    this.userInfo.nivelEd = '';
-    this.userInfo.fechaNac = null as Date | null;
-
-  }
-
-  async mostrar() {
-    const fecha = this.datePipe.transform(this.userInfo.fechaNac, 'dd/MM/yyyy', '', 'es-ES')
-    const alert = await this.alert.create({
-      header: 'Usuario', 
-      message: `
-      Su nombre es  ${this.userInfo.nombre} ${this.userInfo.apellido}, 
-      su nivel de educación es ${this.userInfo.nivelEd} 
-      y su fecha de nacimiento es ${fecha}`,
-      buttons: ['Ok'],
-      cssClass: 'alerta-home'
-    });
-    await alert.present();
-  } 
 }

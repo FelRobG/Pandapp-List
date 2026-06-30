@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    <h1 #tituloCam>
+      <span style="color: #c75f30;">Panda</span>
+      <span style="color: #5f3d27;">pp List</span>
+    </h1>
+    <ion-button slot="end" (click)="viajarTarjetas()">Tarjetas</ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <div class="contenedor-foto">
+    <img *ngIf="fotoUrl" [src]="fotoUrl" alt="Foto tomada">
+    <div *ngIf="!fotoUrl" class="placeholder">
+      <p>Aún no has tomado ninguna foto</p>
+    </div>
+  </div>
+
+  <ion-button expand="block" (click)="tomarFoto()">
+    <ion-icon name="camera">Tomar Foto</ion-icon>
+  </ion-button>
+
+</ion-content>

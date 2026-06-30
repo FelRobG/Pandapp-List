@@ -1,0 +1,64 @@
+<div style="padding: 1.5vw;">
+    <h2 
+    class="content-responsive ion-text-center" 
+    style="margin-bottom: 2vh; margin-top: 6vh;">
+    Crear certificado
+  </h2>
+
+  <ion-list lines="none">
+
+    <ion-item>
+      <ion-label>Nombre del Certificado</ion-label>
+      <ion-input
+        #inputNombre
+        [(ngModel)]="certificacion.nombre"
+        placeholder="Ej: AWS Cloud Practitioner"
+        fill="outline">
+      </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <div class="fecha-padre">
+        <ion-label>Fecha de Obtención</ion-label>
+        <input
+          matInput
+          [matDatepicker]="picker"
+          placeholder="Selecciona tu fecha"
+          [(ngModel)]="certificacion.fechaObtencion"
+          readonly>
+        <mat-datepicker-toggle [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </div>
+    </ion-item>
+
+    <!-- Checkbox vence -->
+    <ion-item>
+      <ion-label>¿El certificado vence?</ion-label>
+      <ion-checkbox
+        [(ngModel)]="certificacion.vence">
+      </ion-checkbox>
+    </ion-item>
+
+    <!-- Fecha vencimiento solo si vence -->
+    <ion-item *ngIf="certificacion.vence">
+      <div class="fecha-padre">
+        <ion-label>Fecha de Vencimiento</ion-label>
+        <input
+          style="width: 70%;"
+          matInput
+          [matDatepicker]="picker"
+          placeholder="Selecciona tu fecha"
+          [(ngModel)]="certificacion.fechaObtencion"
+          readonly>
+        <mat-datepicker-toggle [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </div>
+    </ion-item>
+
+  </ion-list>
+
+  <div class="div-button">
+    <ion-button fill="outline" (click)="limpiar()">Limpiar 🧹</ion-button>
+    <ion-button fill="outline" (click)="guardar()">Guardar💾</ion-button>
+  </div>
+</div>

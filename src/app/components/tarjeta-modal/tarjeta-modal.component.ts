@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 // Import para crear y editar las tarjetas
 import { ModalController } from '@ionic/angular';
+// Para el formato de la fecha y la hora
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-tarjeta-modal',
   templateUrl: './tarjeta-modal.component.html',
@@ -27,9 +29,12 @@ export class TarjetaModalComponent  implements OnInit {
   // Categorias default
   categorias = [
     { nombre: 'Personal', color: '#c75f30' },
+    { nombre: 'Compras', color: '#9300c4' },
+    { nombre: 'Cocina', color: '#ffffff' },
     { nombre: 'Trabajo', color: '#00c3ff' },
     { nombre: 'Estudio', color: '#4a7c59' },
     { nombre: 'Ejercicio', color: '#e8a870' },
+    { nombre: 'Deporte', color: '#2ea548'},
     { nombre: 'Otro', color: '#7e7e7e' },
   ];
   
@@ -40,7 +45,7 @@ export class TarjetaModalComponent  implements OnInit {
     'assets/img/insignia_roja.png',
   ];
 
-  constructor(private modalCtrl: ModalController) { }
+  constructor(private modalCtrl: ModalController, private pipe: DatePipe) { }
 
   ngOnInit() {
     /* 
@@ -80,11 +85,11 @@ export class TarjetaModalComponent  implements OnInit {
       this.cambioCategoria();
     }
     // Se asignan los datos ingresados a la tarjeta
+    const fechaHoraISO = `${this.fecha}T${this.hora}:00`;
     const resultado = {
       titulo: this.titulo.trim(),
       descripcion: this.descripcion.trim(),
-      fecha: this.fecha,
-      hora: this.hora,
+      fecha: fechaHoraISO, // Fecha + hora
       categoria: this.categoria,
       colorCategoria: this.colorCategoria,
       iconoPrio: this.iconoPrio,

@@ -1,0 +1,59 @@
+{
+  "tareas": [
+    {
+      "id": "1",
+      "titulo": "Entrenar piernas",
+      "descripcion": "Rutina de sentadillas y zancadas",
+      "categoria": "Deporte",
+      "colorCategoria": "#4caf50",
+      "fecha": "2026-06-28T09:00:00",
+      "icono": "assets/img/insignia_verde.png"
+    },
+    {
+      "id": "2",
+      "titulo": "Estudiar Ionic",
+      "descripcion": "Repasar AnimationController",
+      "categoria": "Estudios",
+      "colorCategoria": "#2e5c3a",
+      "fecha": "2026-06-29T15:30:00",
+      "icono": "assets/img/insignia_roja.png"
+    },
+    {
+      "id": "3",
+      "titulo": "Comprar verduras",
+      "descripcion": "Para la semana",
+      "categoria": "Comida",
+      "colorCategoria": "#c9a84c",
+      "fecha": "2026-06-30T11:00:00",
+      "icono": "assets/img/insignia_amarilla.png"
+    },
+    {
+      "titulo": "papa",
+      "descripcion": "ten papa",
+      "categoria": "papotas",
+      "id": "myNhJZZU5MM"
+    },
+    {
+      "titulo": "papito",
+      "descripcion": "pepeto",
+      "categoria": "aasdaasdasd",
+      "id": "oVfTxCIWLGA"
+    },
+    {
+      "titulo": "Pruebadesc",
+      "descripcion": "Desconectado",
+      "categoria": "Otros",
+      "id": "dKuof2Xqjq0"
+    }
+  ],
+  "usuarios": [
+    {
+      "id": "1",
+      "usuario": "pepito",
+      "contra": "1234",
+      "email": "pepito@gmail.com",
+      "telefono": "+56912345678"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

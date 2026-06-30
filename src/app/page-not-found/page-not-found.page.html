@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <h1 #titulo404 style="opacity: 0;"> <!-- Falta animacion para hacerlo opacity 1-->
+      <span style="color: #c75f30;">Panda</span>
+      <span style="color: #5f3d27;">pp List</span>
+    </h1>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-text-center" style="--background: #f5e0d0">
+  <hgroup class="hgroup-not-found">
+    <h1>
+      Error 404
+    </h1>
+    <h2>
+      Página no encontrada
+    </h2>
+    <img src="assets/img/Page-404.jpg" alt="bosque-404">
+    <p>
+      La página que buscas se perdió en el Bosque de Bambú, 
+      presiona el botón de abajo para volver al menú principal.
+    </p>
+  </hgroup>
+
+
+  <ion-button fill="outline" (click)="volver()">
+    Volver al menú↩
+  </ion-button>
+</ion-content>

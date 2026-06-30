@@ -1,0 +1,24 @@
+ion-toolbar {
+  --background: #f7ceae;
+  h1 {
+    margin: 0;
+    font-size: clamp(1.5rem, 3vw + 1rem, 7rem);
+    font-weight: bold;
+    padding-left: 3vw;
+  }
+  ion-button{
+    --background: #4a7c59;
+    --border-color: #4a7c59;
+    margin-right: 0;
+  }
+}
+
+ion-content {
+  --background: #f5e0d0;
+}
+
+ion-button{
+  --background: #4a7c59;
+  --border-color: #4a7c59;
+  margin-right: 0;
+}
