@@ -1,24 +1,6 @@
 {
   "tareas": [
     {
-      "id": "1",
-      "titulo": "Entrenar piernas",
-      "descripcion": "Rutina de sentadillas y zancadas",
-      "categoria": "Deporte",
-      "colorCategoria": "#4caf50",
-      "fecha": "2026-06-28T09:00:00",
-      "icono": "assets/img/insignia_verde.png"
-    },
-    {
-      "id": "2",
-      "titulo": "Estudiar Ionic",
-      "descripcion": "Repasar AnimationController",
-      "categoria": "Estudios",
-      "colorCategoria": "#2e5c3a",
-      "fecha": "2026-06-29T15:30:00",
-      "icono": "assets/img/insignia_roja.png"
-    },
-    {
       "id": "3",
       "titulo": "Comprar verduras",
       "descripcion": "Para la semana",
@@ -44,6 +26,18 @@
       "descripcion": "Desconectado",
       "categoria": "Otros",
       "id": "dKuof2Xqjq0"
+    },
+    {
+      "titulo": "tituloprueba",
+      "descripcion": "cualquiera",
+      "categoria": "Deporte",
+      "id": "Drz5YJEUJsY"
+    },
+    {
+      "titulo": "Prueba2",
+      "descripcion": "Prueba",
+      "categoria": "Deporte",
+      "id": "LO-KSyn8qTA"
     }
   ],
   "usuarios": [

@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget 
+  id="cl.duoc.feliperobles.pandapplist" 
+  version="1.0.0" 
+  xmlns="http://www.w3.org/ns/widgets"
+  xmlns:cdv="http://cordova.apache.org/ns/1.0">
+
+  <name>PandApp List</name>
+
+  <description>
+    Aplicación móvil de gestión de tareas con temática de panda rojo,
+    desarrollada con Ionic Angular y Capacitor.
+  </description>
+
+  <author email="fel.roblesg@duocuc.cl">
+    Felipe Robles Gore
+  </author>
+
+  <preference name="android-minSdkVersion" value="24" />
+  <preference name="android-targetSdkVersion" value="36" />
+  <preference name="ScrollEnabled" value="false" />
+  <preference name="BackupWebStorage" value="none" />
+  <preference name="SplashMaintainAspectRatio" value="true" />
+  <preference name="FadeSplashScreenDuration" value="300" />
+  <preference name="SplashShowOnlyFirstTime" value="false" />
+  <preference name="SplashScreen" value="screen" />
+  <preference name="SplashScreenDelay" value="3000" />
+
+</widget>

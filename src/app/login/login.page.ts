@@ -63,9 +63,11 @@ export class LoginPage implements OnInit {
     this.tituloHome.nativeElement.style.transform = 'translateX(0) scale(1)';
     this.tituloHome.nativeElement.style.opacity = '0';
     this.animTituloEntrada();
+    console.log('--------------------------------CONSOLA: Entra a login--------------------------------');
   }
 
   async ingresar() {
+    console.log('--------------------------------Ingresar: BOTÓN PRESIONADO--------------------------------');
     // Variables mas cortas
     const user_name = this.user.user_name;
     const contra = this.user.contra;
@@ -97,6 +99,7 @@ export class LoginPage implements OnInit {
     }
     // Se declara e instancia el elemento NavigationExtras
     // Sirve para interpolar datos (pasar datos de un Page a otro)
+    console.log('--------------------------------Ingresar: ANTES DE DB.TASK.ACTIVARSESION--------------------------------');
     await this.dbTask.activarSesion(user_name); 
     let navigationExtras: NavigationExtras = {
       state: {
@@ -105,7 +108,10 @@ export class LoginPage implements OnInit {
     };
     // Se ejecuta la animacion primero y luego se navega
     await this.animTitulo();
+    console.log('validacion:', valido);
+    console.log('navegando a menu-tarjetas');
     this.router.navigate(['/menu-tarjetas'], navigationExtras);
+    console.log('NAVEGADO a menu-tarjetas');
   }
 
   async viajeRegistro(){

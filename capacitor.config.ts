@@ -1,8 +1,8 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
-  appName: 'SkeletonAPP',
+  appId: 'cl.duoc.feliperobles.pandapplist',
+  appName: 'PandApp List',
   webDir: 'www'
 };
 

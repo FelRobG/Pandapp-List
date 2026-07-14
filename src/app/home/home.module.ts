@@ -19,6 +19,8 @@ import { CertificacionesComponent } from '../components/certificaciones/certific
 import { ExperienciaLaboralComponent } from '../components/experiencia-laboral/experiencia-laboral.component';
 import { MisDatosComponent } from '../components/mis-datos/mis-datos.component';
 
+import { RouterTestingModule } from '@angular/router/testing';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -29,6 +31,8 @@ import { MisDatosComponent } from '../components/mis-datos/mis-datos.component';
     MatInputModule,
     MatNativeDateModule,
     MatFormFieldModule,
+    IonicModule.forRoot(),
+    RouterTestingModule
   ],
   providers: [CapitalizarPipe, DatePipe],
   declarations: [

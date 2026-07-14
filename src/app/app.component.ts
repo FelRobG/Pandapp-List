@@ -21,16 +21,18 @@ export class AppComponent {
 
   // Inicializar la BBDD
   async startDB() {
-    this.sqlite.create({
-      name: 'pandapp.db',
-      location: 'default'
-    }).then(async (db: any) => {
+    try {
+      const db = await this.sqlite.create({
+        name: 'pandapp.db',
+        location: 'default'
+      });
       this.dbTask.setDb(db);
       await this.dbTask.crearTablas();
       await this.checkSesion();
-    }).catch(err => {
-      console.error('Error al crear la base de datos: ', err);
-    });
+    } catch (err) {
+      console.log('SQLite no disponible en navegador, usando fallback');
+      await this.checkSesion();
+    }
   }
 
   /* Revisa si hay una sesion activa en storage al volver a entrar,
